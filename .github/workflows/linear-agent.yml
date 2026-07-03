@@ -26,11 +26,10 @@ jobs:
         with:
           fetch-depth: 1
 
-      # Chinh lai theo stack cua repo (vi du .NET 8)
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          dotnet-version: 8.0.x
+          node-version: 22
 
       - name: Run Claude Code agent
         uses: anthropics/claude-code-action@v1
@@ -58,8 +57,10 @@ jobs:
             2. Tao branch moi ten: ${{ github.event.client_payload.branchName }}
             3. Implement dung theo acceptance criteria cua ticket. Pham vi
                thay doi cang nho cang tot, khong refactor ngoai pham vi.
-            4. Chay `dotnet build` va `dotnet test`. Neu fail thi sua den khi
-               pass. KHONG mo PR khi build/test dang fail.
+            4. Voi moi file .js/.mjs thay doi, chay `node --check <file>` de
+               chac chan syntax dung. Neu repo co script test (package.json)
+               thi chay `npm test` va sua den khi pass. KHONG mo PR khi
+               check/test dang fail.
             5. Commit voi message bat dau bang ma ticket, vi du:
                "${{ github.event.client_payload.identifier }}: <mo ta ngan>"
             6. Push branch va dung `gh pr create --draft` de mo DRAFT pull
@@ -73,4 +74,4 @@ jobs:
           claude_args: |
             --max-turns 60
             --model claude-sonnet-4-6
-            --allowedTools "Bash(git:*),Bash(gh:*),Bash(dotnet:*),Read,Write,Edit,Glob,Grep"
+            --allowedTools "Bash(git:*),Bash(gh:*),Bash(node:*),Bash(npm:*),Read,Write,Edit,Glob,Grep"
