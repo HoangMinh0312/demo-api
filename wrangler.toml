@@ -1,0 +1,12 @@
+name = "linear-claude-relay"
+main = "worker.js"
+compatibility_date = "2026-06-01"
+
+[vars]
+GITHUB_OWNER = "your-org"
+GITHUB_REPO = "your-repo"
+TRIGGER_LABEL = "ai-agent"
+
+# Secrets - set bang lenh, KHONG commit vao file nay:
+#   npx wrangler secret put LINEAR_WEBHOOK_SECRET
+#   npx wrangler secret put GITHUB_TOKEN
